@@ -7,6 +7,8 @@ class java {
   $java_home = "#{`/usr/libexec/java_home`}"
   $sec_dir = "#{java_home}/lib/security"
 
+
+
   # !! TODO !! put in s3
   $local_policy_url = 'http://cl.ly/1I3t1K1Q0G1N/download/local_policy.jar'
   $local_policy_path = "#{sec_dir}/local_policy.jar"
@@ -34,7 +36,7 @@ class java {
     require => Package['java']
   }
 
-  file { $sec_dir:
+  file { "#{`/usr/libexec/java_home`}/lib/security":
     ensure  => 'directory',
     owner   => 'root',
     mode    => 0775,
