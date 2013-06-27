@@ -3,18 +3,17 @@ class java {
   $jdk_url = 'https://s3.amazonaws.com/boxen-downloads/java/jdk-7u21-macosx-x64.dmg'
   $wrapper = "${boxen::config::bindir}/java"
 
-
   # Allow 'large' keys locally.
   $java_home = `/usr/libexec/java_home`
-  $sec_dir = "#{java_homme}/lib/security"
+  $sec_dir = "#{java_home}/lib/security"
 
   # !! TODO !! put in s3
   $local_policy_url = 'http://cl.ly/1I3t1K1Q0G1N/download/local_policy.jar'
-  $local_policy_path = "#{java_home}/lib/security/local_policy.jar"
+  $local_policy_path = "#{sec_dir}/local_policy.jar"
 
   # !! TODO !! put in s3
   $us_policy_url = 'http://cl.ly/2M0s2l3v1x2m/download/US_export_policy.jar'
-  $us_policy_path = "#{java_home}/lib/security/US_policy.jar"
+  $us_policy_path = "#{sec_dir}/US_policy.jar"
 
   package {
     'jre-7u21.dmg':
