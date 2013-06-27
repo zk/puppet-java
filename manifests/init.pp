@@ -4,7 +4,7 @@ class java {
   $wrapper = "${boxen::config::bindir}/java"
 
   # Allow 'large' keys locally.
-  $java_home = `/usr/libexec/java_home`
+  $java_home = "#{`/usr/libexec/java_home`}"
   $sec_dir = "#{java_home}/lib/security"
 
   # !! TODO !! put in s3
