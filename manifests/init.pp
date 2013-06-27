@@ -4,10 +4,10 @@ class java {
   $wrapper = "${boxen::config::bindir}/java"
 
   # Allow 'large' keys locally.
-  $java_home = "#{`/usr/libexec/java_home`}"
-  $sec_dir = "#{java_home}/lib/security"
+#  $java_home = "#{`/usr/libexec/java_home`}"
+#  $sec_dir = "#{java_home}/lib/security"
 
-
+  $sec_dir = "foo"
 
   # !! TODO !! put in s3
   $local_policy_url = 'http://cl.ly/1I3t1K1Q0G1N/download/local_policy.jar'
