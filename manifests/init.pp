@@ -2,18 +2,7 @@ class java {
   $jre_url = 'https://s3.amazonaws.com/boxen-downloads/java/jre-7u21-macosx-x64.dmg'
   $jdk_url = 'https://s3.amazonaws.com/boxen-downloads/java/jdk-7u21-macosx-x64.dmg'
   $wrapper = "${boxen::config::bindir}/java"
-
-  # Allow 'large' keys locally.
-
-  $sec_dir = "foo"
-
-  # !! TODO !! put in s3
-  $local_policy_url = 'http://cl.ly/1I3t1K1Q0G1N/download/local_policy.jar'
-  $local_policy_path = "#{sec_dir}/local_policy.jar"
-
-  # !! TODO !! put in s3
-  $us_policy_url = 'http://cl.ly/2M0s2l3v1x2m/download/US_export_policy.jar'
-  $us_policy_path = "#{sec_dir}/US_policy.jar"
+  $sec_dir = "/Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre/lib/security"
 
   package {
     'jre-7u21.dmg':
@@ -34,24 +23,31 @@ class java {
     require => Package['java']
   }
 
-  file { "#{`/usr/libexec/java_home`}/lib/security":
+
+  # Allow 'large' keys locally.
+  # http://www.ngs.ac.uk/tools/jcepolicyfiles
+
+  file { $sec_dir:
     ensure  => 'directory',
     owner   => 'root',
+    group   => 'wheel',
     mode    => 0775,
     alias   => 'sec-dir',
     require => Package['java']
   }
 
-  file { $local_policy_path:
-    source  => $local_policy_url,
+  file { "${sec_dir}/local_policy.jar":
+    source  => 'puppet:///modules/java/local_policy.jar',
     owner   => 'root',
+    group   => 'wheel',
     mode    => 0664,
     require => File['sec-dir']
   }
 
-  file { $local_policy_path:
-    source  => $local_policy_url,
+  file { "${sec_dir}/US_export_policy.jar":
+    source  => 'puppet:///modules/java/US_export_policy.jar',
     owner   => 'root',
+    group   => 'wheel',
     mode    => 0664,
     require => File['sec-dir']
   }
