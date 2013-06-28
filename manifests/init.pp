@@ -1,8 +1,9 @@
+# Install JDK7u21 and JCE unlimited key size policy files
 class java {
   $jre_url = 'https://s3.amazonaws.com/boxen-downloads/java/jre-7u21-macosx-x64.dmg'
   $jdk_url = 'https://s3.amazonaws.com/boxen-downloads/java/jdk-7u21-macosx-x64.dmg'
   $wrapper = "${boxen::config::bindir}/java"
-  $sec_dir = "/Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre/lib/security"
+  $sec_dir = '/Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre/lib/security'
 
   package {
     'jre-7u21.dmg':
@@ -19,7 +20,7 @@ class java {
 
   file { $wrapper:
     source  => 'puppet:///modules/java/java.sh',
-    mode    => 0755,
+    mode    => '0755',
     require => Package['java']
   }
 
@@ -31,7 +32,7 @@ class java {
     ensure  => 'directory',
     owner   => 'root',
     group   => 'wheel',
-    mode    => 0775,
+    mode    => '0775',
     alias   => 'sec-dir',
     require => Package['java']
   }
@@ -40,7 +41,7 @@ class java {
     source  => 'puppet:///modules/java/local_policy.jar',
     owner   => 'root',
     group   => 'wheel',
-    mode    => 0664,
+    mode    => '0664',
     require => File['sec-dir']
   }
 
@@ -48,7 +49,7 @@ class java {
     source  => 'puppet:///modules/java/US_export_policy.jar',
     owner   => 'root',
     group   => 'wheel',
-    mode    => 0664,
+    mode    => '0664',
     require => File['sec-dir']
   }
 }
