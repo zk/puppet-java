@@ -1,6 +1,6 @@
 # Java Puppet Module for Boxen
 
-Installs Java 7u21.
+Installs Java 7u21 and unlimited key length security policy files.
 
 ## Usage
 
